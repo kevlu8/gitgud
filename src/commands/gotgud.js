@@ -8,6 +8,7 @@ module.exports = {
 		.setName('gotgud')
 		.setDescription('Marks your current problem as solved'),
 	async execute(interaction) {
+		await interaction.deferReply();
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		const uid = interaction.user.id;
 		if (!users[uid]) {

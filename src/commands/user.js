@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { rating_to_number, rating_to_title } = require('../rating_helper.js');
-const axios = require('axios');
 const fs = require('fs');
 
 module.exports = {
@@ -9,6 +8,7 @@ module.exports = {
 		.setDescription('Shows user information')
 		.addMentionableOption(option => option.setName('username').setDescription('The user to get information about')),
 	async execute(interaction) {
+		await interaction.deferReply();
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		let username = interaction.options.getMentionable('username');
 		if (username === null) {
@@ -35,6 +35,7 @@ module.exports = {
 				.setDescription('User information')
 				.addFields(
 					{ name: 'Rating', value: `${users[uid].rating.toString() + (users[uid].rating_deviation > 200 ? "?" : "")}`, inline: true },
+					{ name: 'Rating deviation', value: users[uid].rating_deviation.toString(), inline: true},
 					{ name: 'Title', value: rating_to_title(users[uid].rating) + `#${rating_to_number(users[uid].rating)}`, inline: true },
 					{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
 				)
@@ -49,6 +50,7 @@ module.exports = {
 				.setDescription('User information')
 				.addFields(
 					{ name: 'Rating', value: `${users[uid].rating.toString() + (users[uid].rating_deviation > 200 ? "?" : "")}`, inline: true },
+					{ name: 'Rating deviation', value: users[uid].rating_deviation.toString(), inline: true},
 					{ name: 'Title', value: rating_to_title(users[uid].rating), inline: true },
 					{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
 				)

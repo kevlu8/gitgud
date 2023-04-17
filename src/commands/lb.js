@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { rating_to_title } = require('../rating_helper.js');
-const axios = require('axios');
 const fs = require('fs');
 
 module.exports = {
@@ -8,6 +7,7 @@ module.exports = {
 		.setName('lb')
 		.setDescription('Shows a leaderboard of users'),
 	async execute(interaction) {
+		await interaction.deferReply();
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		let best = [];
 		for (const [uid, user] of Object.entries(users)) {
