@@ -25,7 +25,7 @@ function update_rating(old_rating, rating_deviation, points) {
 	if (delta < -200 && points > 0) {
 		// solved a problem that was too easy
 		delta = 50;
-	} else if (delta < -200 && points < 0) {
+	} else if (delta < 0 && points < 0) {
 		// could not solve a problem that was too easy
 		delta = Math.round(delta / 2);
 	}
