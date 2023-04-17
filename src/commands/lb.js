@@ -7,7 +7,6 @@ module.exports = {
 		.setName('lb')
 		.setDescription('Shows a leaderboard of users'),
 	async execute(interaction) {
-		await interaction.deferReply();
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		let best = [];
 		for (const [uid, user] of Object.entries(users)) {

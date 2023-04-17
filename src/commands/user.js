@@ -8,7 +8,6 @@ module.exports = {
 		.setDescription('Shows user information')
 		.addMentionableOption(option => option.setName('username').setDescription('The user to get information about')),
 	async execute(interaction) {
-		await interaction.deferReply();
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		let username = interaction.options.getMentionable('username');
 		if (username === null) {
