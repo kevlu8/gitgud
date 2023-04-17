@@ -11,12 +11,12 @@ module.exports = {
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		const uid = interaction.user.id;
 		if (!users[uid]) {
-			await interaction.reply('You are not linked to any DMOJ account');
+			await interaction.reply('You are not linked to any DMOJ account', { ephemeral: true });
 			return;
 		}
 		const curr_prob = users[uid].current_problem;
 		if (!curr_prob) {
-			await interaction.reply('You are not currently solving a problem. Use `/gitgud` to get a new problem.');
+			await interaction.reply('You are not currently solving a problem. Use `/gitgud` to get a new problem.', { ephemeral: true });
 			return;
 		}
 		const username = users[uid].username;
@@ -48,7 +48,7 @@ module.exports = {
 			member.roles.add(role);
 			return;
 		}
-		await interaction.reply(`You haven't solved ${curr_prob} yet. Use \`/nogud\` to skip it.`);
+		await interaction.reply(`You haven't solved ${curr_prob} yet. Use \`/nogud\` to skip it.`, { ephemeral: true });
 		return;
 	},
 };

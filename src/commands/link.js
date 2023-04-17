@@ -12,7 +12,7 @@ module.exports = {
 
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		if (users[uid]) {
-			await interaction.reply(`You are already linked to ${users[uid]['username']}`);
+			await interaction.reply(`You are already linked to ${users[uid]['username']}`, { ephemeral: true });
 			return;
 		}
 

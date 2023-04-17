@@ -1,16 +1,6 @@
-// let values = [3, 5, 7, 10, 12, 15, 17, 20, 25, 30, 35, 40, 45, 50];
-
 function rating_to_points(rating) {
 	let p = Math.min(60 / (1 + Math.exp(-(rating-2300)/600)), 50);
 	// Learn more: https://www.desmos.com/calculator/zgvf4p7n8v
-	// let ans = 50;
-	// for (let x of values) {
-	// 	if (p < x) {
-	// 		ans = x;
-	// 		break;
-	// 	}
-	// }
-	// return ans;
 	return p;
 }
 
@@ -35,6 +25,9 @@ function update_rating(old_rating, rating_deviation, points) {
 	if (delta < -200 && points > 0) {
 		// solved a problem that was too easy
 		delta = 50;
+	} else if (delta < -200 && points < 0) {
+		// could not solve a problem that was too easy
+		delta = -Math.round(delta / 2);
 	}
 	if (points < 0 && delta > 200) {
 		// could not solve a problem that was too hard
