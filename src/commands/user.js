@@ -7,17 +7,25 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('user')
 		.setDescription('Shows user information')
-		.addStringOption(option => option.setName('username').setDescription('DMOJ username')),
+		.addMentionableOption(option => option.setName('username').setDescription('The user to get information about')),
 	async execute(interaction) {
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
-		let username = interaction.options.getString('username');
-		const uid = interaction.user.id;
+		let username = interaction.options.getMentionable('username');
 		if (username === null) {
+			var uid = interaction.user.id;
 			if (users[uid] === undefined) {
 				await interaction.reply('You have not linked your DMOJ account yet. Use `/link` to link your account.');
 				return;
 			}
 			username = users[interaction.user.id];
+		}
+		else {
+			var uid = username.id;
+			if (users[uid] === undefined) {
+				await interaction.reply('This user has not linked their DMOJ account yet.');
+				return;
+			}
+			username = users[uid];
 		}
 		const embed = new EmbedBuilder()
 			.setTitle(username.username)
@@ -27,6 +35,7 @@ module.exports = {
 			.addFields(
 				{ name: 'Rating', value: users[uid].rating.toString(), inline: true },
 				{ name: 'Title', value: rating_to_title(users[uid].rating), inline: true },
+				{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
 			)
 			.setTimestamp();
 		await interaction.reply({ embeds: [embed] });

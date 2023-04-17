@@ -25,12 +25,13 @@ module.exports = {
 		const points = (await axios.get(`https://dmoj.ca/api/v2/problem/${curr_prob}`)).data.data.object.points;
 		let response = await axios.get(`https://dmoj.ca/api/v2/user/${username}`);
 		let solved = response.data.data.object.solved_problems;
-		if (true || solved.includes(curr_prob)) {
+		if (solved.includes(curr_prob)) {
 			let new_rating = update_rating(rating, rating_deviation, points);
 			users[uid].rating = new_rating[0];
 			users[uid].rating_deviation = new_rating[1];
 			users[uid].current_problem = null;
-			await interaction.reply(`Nice job! You solved ${curr_prob}! Your new rating is ${new_rating[0]}.`);
+			users[uid].problem_cnt++;
+			await interaction.reply(`Nice job! You solved ${curr_prob}! Your new rating is ${new_rating[0]} (+${new_rating[0] - rating}).`);
 			fs.writeFile('users.json', JSON.stringify(users), (err) => {
 				if (err)
 					console.error(err);

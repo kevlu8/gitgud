@@ -18,16 +18,17 @@ module.exports = {
 
 		users[uid] = {
 			"username": username,
-			"rating": 800,
+			"rating": 1200,
 			"rating_deviation": 350, // (not) glicko2
 			"current_problem": null,
+			"problem_cnt": 0,
 		};
 		fs.writeFile('users.json', JSON.stringify(users), (err) => {
 			if (err)
 				console.error(err);
 		});
 		const member = interaction.guild.members.cache.get(uid);
-		const role = interaction.guild.roles.cache.find(role => role.name === 'Iron');
+		const role = interaction.guild.roles.cache.find(role => role.name === 'Silver');
 		member.roles.add(role);
 		await interaction.reply(`You are now linked to ${username}`);
 	},

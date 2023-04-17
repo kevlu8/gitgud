@@ -1,0 +1,9 @@
+- make rating changes larger - losing/gaining ~5 points is way too small
+- ideally go for ~20-30 points
+
+- add counter for amount of times the user has gittengud
+- display that in /user command
+
+- add a command to show the top 10 users
+
+- add detailed stats for rating >= 2000 (e.g. Master #5)
