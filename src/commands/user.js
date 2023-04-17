@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { update_rating, rating_to_title, titles } = require('../rating_helper.js');
+const { rating_to_number, rating_to_title } = require('../rating_helper.js');
 const axios = require('axios');
 const fs = require('fs');
 
@@ -27,18 +27,34 @@ module.exports = {
 			}
 			username = users[uid];
 		}
-		const embed = new EmbedBuilder()
-			.setTitle(username.username)
-			.setColor(0x00AE86)
-			.setURL(`https://dmoj.ca/user/${username.username}`)
-			.setDescription('User information')
-			.addFields(
-				{ name: 'Rating', value: users[uid].rating.toString(), inline: true },
-				{ name: 'Title', value: rating_to_title(users[uid].rating), inline: true },
-				{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
-			)
-			.setTimestamp();
-		await interaction.reply({ embeds: [embed] });
-		return;
+		if (users[uid].rating > 2000) {
+			const embed = new EmbedBuilder()
+				.setTitle(username.username)
+				.setColor(0x00AE86)
+				.setURL(`https://dmoj.ca/user/${username.username}`)
+				.setDescription('User information')
+				.addFields(
+					{ name: 'Rating', value: `${users[uid].rating.toString() + (users[uid].rating_deviation > 200 ? "?" : "")}`, inline: true },
+					{ name: 'Title', value: rating_to_title(users[uid].rating) + `#${rating_to_number(users[uid].rating)}`, inline: true },
+					{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
+				)
+				.setTimestamp();
+			await interaction.reply({ embeds: [embed] });
+			return;
+		} else {
+			const embed = new EmbedBuilder()
+				.setTitle(username.username)
+				.setColor(0x00AE86)
+				.setURL(`https://dmoj.ca/user/${username.username}`)
+				.setDescription('User information')
+				.addFields(
+					{ name: 'Rating', value: `${users[uid].rating.toString() + (users[uid].rating_deviation > 200 ? "?" : "")}`, inline: true },
+					{ name: 'Title', value: rating_to_title(users[uid].rating), inline: true },
+					{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
+				)
+				.setTimestamp();
+			await interaction.reply({ embeds: [embed] });
+			return;
+		}
 	}
 };

@@ -19,7 +19,7 @@ module.exports = {
 		users[uid] = {
 			"username": username,
 			"rating": 1200,
-			"rating_deviation": 350, // (not) glicko2
+			"rating_deviation": 500,
 			"current_problem": null,
 			"problem_cnt": 0,
 		};

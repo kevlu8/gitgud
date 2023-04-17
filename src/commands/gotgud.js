@@ -48,7 +48,7 @@ module.exports = {
 			member.roles.add(role);
 			return;
 		}
-		await interaction.reply(`You haven't solved ${curr_prob} yet. Use \`/notgud\` to skip it.`);
+		await interaction.reply(`You haven't solved ${curr_prob} yet. Use \`/nogud\` to skip it.`);
 		return;
 	},
 };
