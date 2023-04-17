@@ -1,4 +1,6 @@
 - make rating changes larger - losing/gaining ~5 points is way too small
 - ideally go for ~20-30 points // IN PROGRESS
 
+- change rating deviation to also take the number of problems solved into account
+
 - when linking, check to see if the target dmoj account contains a random string in the bio
