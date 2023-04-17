@@ -5,8 +5,8 @@ const fs = require('fs');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('gitgud')
-		.setDescription('Recommends a problem for you to solve'),
+		.setName('lb')
+		.setDescription('Shows a leaderboard of users'),
 	async execute(interaction) {
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 		let best = [];
