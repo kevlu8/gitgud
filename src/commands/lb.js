@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription('Recommends a problem for you to solve'),
 	async execute(interaction) {
 		let users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
-		let best = {};
+		let best = [];
 		for (const [uid, user] of Object.entries(users)) {
 			best.push({
 				"username": user.username,
