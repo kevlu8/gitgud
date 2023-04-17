@@ -22,6 +22,7 @@ module.exports = {
 				return a.rating - b.rating;
 			return a.gittengud - b.gittengud;
 		});
+		best.reverse();
 		let embed = new EmbedBuilder()
 			.setTitle('Leaderboard')
 			.setColor(0x00AE86)
