@@ -20,8 +20,9 @@ module.exports = {
 				{ name: '2000-2499', value: 'Master', inline: false },
 				{ name: '2500-2999', value: 'Grandmaster', inline: false },
 				{ name: '3000+', value: 'Immortal', inline: false },
-			);
-		await interaction.reply({ embeds: [embed] });
+			)
+			.setFooter('Note: ratings above 2000 will have a number after them, indicating the user\'s global rank.');
+		await interaction.reply({ embeds: [embed], ephemeral: true });
 		return;
 	}
 };

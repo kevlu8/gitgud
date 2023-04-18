@@ -22,6 +22,7 @@ module.exports = {
 			"rating_deviation": 500,
 			"current_problem": null,
 			"problem_cnt": 0,
+			"unsolved_cnt": 0,
 		};
 		fs.writeFile('users.json', JSON.stringify(users), (err) => {
 			if (err)

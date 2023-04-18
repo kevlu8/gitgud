@@ -19,27 +19,27 @@ function rating_to_number(rating) {
 	return ans;
 }
 
-function update_rating(old_rating, rating_deviation, points) {
+function update_rating(old_rating, rating_deviation, points, problem_cnt) {
 	let perf_rating = points_to_rating(points);
 	let delta = perf_rating - old_rating;
 	if (delta < -200 && points > 0) {
 		// solved a problem that was too easy
-		delta = 50;
+		delta = -Math.max(500 + delta, 0) / 5;
 	} else if (delta < 0 && points < 0) {
 		// could not solve a problem that was too easy
-		delta = Math.round(delta / 2);
-	}
-	else if (points < 0 && delta > 200) {
+		delta = delta / 2;
+	} else if (points < 0 && delta > 200) {
 		// could not solve a problem that was too hard
-		delta = -50;
-	} else if (points < 0) {
-		// could not solve a problem that was not too hard
-		delta = -Math.round(delta / 2);
+		delta = -Math.max(500 - delta, 0) / 5;
 	}
+	if (points < 0) {
+		delta = -Math.abs(delta);
+	}
+	delta = Math.round(delta);
 	console.log(old_rating, perf_rating, rating_deviation, delta);
-	let new_rating = Math.round((old_rating + delta * (rating_deviation + 100) / 500));
+	let new_rating = Math.round(old_rating + delta * (rating_deviation + 100) / 500);
 	let new_rating_deviation = Math.min(Math.round(Math.sqrt((rating_deviation + 1) * (Math.abs(delta) + 1) - 1)), 500);
-	return [Math.max(new_rating, 0), new_rating_deviation];
+	return [Math.max(new_rating, 100), new_rating_deviation];
 }
 
 function rating_to_title(rating) {
@@ -55,7 +55,7 @@ function rating_to_title(rating) {
 }
 
 function point_ranges(rating_deviation) {
-	return Math.log(rating_deviation) * 1.5;
+	return Math.max(Math.log(rating_deviation), 3);
 }
 
 module.exports = {

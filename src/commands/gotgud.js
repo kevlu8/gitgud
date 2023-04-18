@@ -26,7 +26,7 @@ module.exports = {
 		let response = await axios.get(`https://dmoj.ca/api/v2/user/${username}`);
 		let solved = response.data.data.object.solved_problems;
 		if (solved.includes(curr_prob)) {
-			let new_rating = update_rating(rating, rating_deviation, points);
+			let new_rating = update_rating(rating, rating_deviation, points, users[uid].problem_cnt + users[uid].unsolved_cnt);
 			users[uid].rating = new_rating[0];
 			users[uid].rating_deviation = new_rating[1];
 			users[uid].current_problem = null;
