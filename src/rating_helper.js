@@ -37,7 +37,7 @@ function update_rating(old_rating, rating_deviation, points, problem_cnt) {
 	delta = Math.round(delta);
 	console.log(old_rating, perf_rating, rating_deviation, delta);
 	let new_rating = Math.round(old_rating + delta * (rating_deviation + 100) / 500);
-	let new_rating_deviation = Math.min(Math.round(Math.sqrt((rating_deviation + 1) * (Math.abs(delta) + 1) - 1) * 5 / x), 500);
+	let new_rating_deviation = Math.min(Math.round(Math.sqrt((rating_deviation + 1) * (Math.abs(delta) + 1) - 1) * 5 / problem_cnt), 500);
 	return [Math.max(new_rating, 100), new_rating_deviation];
 }
 
