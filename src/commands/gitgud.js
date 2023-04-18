@@ -16,16 +16,17 @@ module.exports = {
 		}
 		const curr_prob = users[uid].current_problem;
 		if (curr_prob) {
+			let prob = await axios.get(`https://dmoj.ca/api/v2/problem/${curr_prob}`).data.data.object;
 			const embed = new EmbedBuilder()
 				.setTitle('gitgud')
 				.setColor(0x00AE86)
-				.setDescription(`You are currently doing [this problem](https://dmoj.ca/problem/${problems[i].code}). When you're done, use \`/gotgud\`. If you don't want to do this problem, use \`/nogud\`.`)
+				.setDescription(`You are currently doing [this problem](https://dmoj.ca/problem/${curr_prob}). When you're done, use \`/gotgud\`. If you don't want to do this problem, use \`/nogud\`.`)
 				.addFields(
-					{ name: 'Problem Name', value: problems[i].name, inline: true },
-					{ name: 'Problem Points', value: problems[i].points.toString(), inline: true },
+					{ name: 'Problem Name', value: prob.name, inline: true },
+					{ name: 'Problem Points', value: prob.points.toString(), inline: true },
 					{ name: ' ', value: ' ', inline: false },
-					{ name: 'Rating for gittinggud', value: update_rating(rating, users[uid].rating_deviation, problems[i].points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
-					{ name: 'Rating for nogud', value: update_rating(rating, users[uid].rating_deviation, -problems[i].points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
+					{ name: 'Rating for gittinggud', value: update_rating(users[uid].rating, users[uid].rating_deviation, prob.points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
+					{ name: 'Rating for nogud', value: update_rating(users[uid].rating, users[uid].rating_deviation, -prob.points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
 				)
 				.setTimestamp();
 			await interaction.reply({ embeds: [embed] });
