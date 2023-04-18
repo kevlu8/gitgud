@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { update_rating, rating_to_title, titles } = require('../rating_helper.js');
 const axios = require('axios');
 const fs = require('fs');
@@ -31,7 +31,11 @@ module.exports = {
 			users[uid].rating_deviation = new_rating[1];
 			users[uid].current_problem = null;
 			users[uid].problem_cnt++;
-			await interaction.reply(`Nice job! You solved ${curr_prob}! Your new rating is ${new_rating[0]} (+${new_rating[0] - rating}).`);
+			const embed = new EmbedBuilder()
+				.setTitle('gotgud')
+				.setDescription(`Nice job! You solved ${curr_prob}! Your new rating is ${new_rating[0]} (+${new_rating[0] - rating}).`)
+				.setColor(0x00AE86);
+			await interaction.reply({ embeds: [embed] });
 			fs.writeFile('users.json', JSON.stringify(users), (err) => {
 				if (err)
 					console.error(err);

@@ -16,7 +16,19 @@ module.exports = {
 		}
 		const curr_prob = users[uid].current_problem;
 		if (curr_prob) {
-			await interaction.reply(`You are currently solving ${curr_prob}. Either finish it (\`/gotgud\`) or use \`/nogud\` to skip it.`, { ephemeral: true });
+			const embed = new EmbedBuilder()
+				.setTitle('gitgud')
+				.setColor(0x00AE86)
+				.setDescription(`You are currently doing [this problem](https://dmoj.ca/problem/${problems[i].code}). When you're done, use \`/gotgud\`. If you don't want to do this problem, use \`/nogud\`.`)
+				.addFields(
+					{ name: 'Problem Name', value: problems[i].name, inline: true },
+					{ name: 'Problem Points', value: problems[i].points.toString(), inline: true },
+					{ name: ' ', value: ' ', inline: false },
+					{ name: 'Rating for gittinggud', value: update_rating(rating, users[uid].rating_deviation, problems[i].points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
+					{ name: 'Rating for nogud', value: update_rating(rating, users[uid].rating_deviation, -problems[i].points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
+				)
+				.setTimestamp();
+			await interaction.reply({ embeds: [embed] });
 			return;
 		}
 		const rating = users[uid].rating;

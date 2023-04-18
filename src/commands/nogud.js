@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { update_rating, rating_to_title, titles } = require('../rating_helper.js');
 const axios = require('axios');
 const fs = require('fs');
@@ -31,7 +31,11 @@ module.exports = {
 			users[uid].rating_deviation = new_rating[1];
 			users[uid].current_problem = null;
 			users[uid].unsolved_cnt += 1;
-			await interaction.reply(`You could not solve ${curr_prob}. Your new rating is ${new_rating[0]} (-${Math.abs(new_rating[0] - rating)}).`);
+			const embed = new EmbedBuilder()
+				.setTitle('nogud')
+				.setColor(0x00AE86)
+				.setDescription(`You could not solve ${curr_prob}. Your new rating is ${new_rating[0]} (-${Math.abs(new_rating[0] - rating)}).`);
+			await interaction.reply({ embeds: [embed] });
 			fs.writeFile('users.json', JSON.stringify(users), (err) => {
 				if (err)
 					console.error(err);
@@ -49,7 +53,11 @@ module.exports = {
 			member.roles.add(role);
 			return;
 		}
-		await interaction.reply(`You have solved ${curr_prob} already. Use \`/gotgud\` to mark it as solved.`);
+		const embed = new EmbedBuilder()
+			.setTitle('nogud')
+			.setColor(0x00AE86)
+			.setDescription(`You have already solved ${curr_prob}. Run \`/gitgud\` to get a new problem.`);
+		await interaction.reply({ embeds: [embed] });
 		return;
 	},
 };

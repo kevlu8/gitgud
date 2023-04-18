@@ -38,6 +38,7 @@ module.exports = {
 					{ name: 'Title', value: rating_to_title(users[uid].rating) + `#${rating_to_number(users[uid].rating)}`, inline: true },
 					{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
 					{ name: 'nogud count', value: users[uid].unsolved_cnt.toString(), inline: true },
+					{ name: 'Current problem', value: users[uid].current_problem, inline: true },
 				)
 				.setTimestamp();
 			await interaction.reply({ embeds: [embed] });
@@ -54,6 +55,7 @@ module.exports = {
 					{ name: 'Title', value: rating_to_title(users[uid].rating), inline: true },
 					{ name: 'gitgud count', value: users[uid].problem_cnt.toString(), inline: true },
 					{ name: 'nogud count', value: users[uid].unsolved_cnt.toString(), inline: true },
+					{ name: 'Current problem', value: users[uid].current_problem, inline: true },
 				)
 				.setTimestamp();
 			await interaction.reply({ embeds: [embed] });
