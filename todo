@@ -4,3 +4,7 @@
 - change rating deviation to also take the number of problems solved into account
 
 - when linking, check to see if the target dmoj account contains a random string in the bio
+
+- add embeds to gotgud and nogud
+
+- stop using JSON as a db

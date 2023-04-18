@@ -30,6 +30,7 @@ module.exports = {
 			users[uid].rating = new_rating[0];
 			users[uid].rating_deviation = new_rating[1];
 			users[uid].current_problem = null;
+			users[uid].unsolved_cnt += 1;
 			await interaction.reply(`You could not solve ${curr_prob}. Your new rating is ${new_rating[0]} (-${Math.abs(new_rating[0] - rating)}).`);
 			fs.writeFile('users.json', JSON.stringify(users), (err) => {
 				if (err)

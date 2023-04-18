@@ -22,8 +22,8 @@ function rating_to_number(rating) {
 function update_rating(old_rating, rating_deviation, points, problem_cnt) {
 	let perf_rating = points_to_rating(points);
 	let delta = perf_rating - old_rating;
-	if (delta < -200 && points > 0) {
-		// solved a problem that was too easy
+	if (delta < 0 && points > 0) {
+		// solved a problem that was easy
 		delta = -Math.max(500 + delta, 0) / 5;
 	} else if (delta < 0 && points < 0) {
 		// could not solve a problem that was too easy
@@ -32,9 +32,8 @@ function update_rating(old_rating, rating_deviation, points, problem_cnt) {
 		// could not solve a problem that was too hard
 		delta = -Math.max(500 - delta, 0) / 5;
 	}
-	if (points < 0) {
-		delta = -Math.abs(delta);
-	}
+	if (points < 0) delta = -Math.abs(delta);
+	else delta = Math.abs(delta);
 	delta = Math.round(delta);
 	console.log(old_rating, perf_rating, rating_deviation, delta);
 	let new_rating = Math.round(old_rating + delta * (rating_deviation + 100) / 500);

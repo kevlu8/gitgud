@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { rating_to_points, point_ranges } = require('../rating_helper.js');
+const { rating_to_points, point_ranges, update_rating } = require('../rating_helper.js');
 const axios = require('axios');
 const fs = require('fs');
 
@@ -39,10 +39,13 @@ module.exports = {
 				const embed = new EmbedBuilder()
 					.setTitle('gitgud')
 					.setColor(0x00AE86)
-					.setDescription(`Go do [${problems[i].code}](https://dmoj.ca/problem/${problems[i].code}). When you're done, use \`/gotgud\`. If you don't want to do this problem, use \`/nogud\`.`)
+					.setDescription(`Go do [this problem](https://dmoj.ca/problem/${problems[i].code}). When you're done, use \`/gotgud\`. If you don't want to do this problem, use \`/nogud\`.`)
 					.addFields(
 						{ name: 'Problem Name', value: problems[i].name, inline: true },
 						{ name: 'Problem Points', value: problems[i].points.toString(), inline: true },
+						{ name: ' ', value: ' ', inline: false },
+						{ name: 'Rating for gittinggud', value: update_rating(rating, users[uid].rating_deviation, problems[i].points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
+						{ name: 'Rating for nogud', value: update_rating(rating, users[uid].rating_deviation, -problems[i].points, users[uid].problem_cnt + users[uid].unsolved_cnt)[0].toString(), inline: true },
 					)
 					.setTimestamp();
 				await interaction.reply({ embeds: [embed] });
