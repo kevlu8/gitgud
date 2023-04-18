@@ -16,7 +16,7 @@ module.exports = {
 		}
 		const curr_prob = users[uid].current_problem;
 		if (curr_prob) {
-			let prob = await axios.get(`https://dmoj.ca/api/v2/problem/${curr_prob}`).data.data.object;
+			let prob = (await axios.get(`https://dmoj.ca/api/v2/problem/${curr_prob}`)).data.data.object;
 			const embed = new EmbedBuilder()
 				.setTitle('gitgud')
 				.setColor(0x00AE86)
