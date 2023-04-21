@@ -32,7 +32,7 @@ function update_rating(old_rating, rating_deviation, points, problem_cnt) {
 		// could not solve a problem that was too hard
 		delta = -Math.max(500 - delta, 0) / 5;
 	}
-	if (points < 0) delta = -Math.abs(delta);
+	if (points < 0) delta = -Math.abs(round(delta / 2));
 	else delta = Math.abs(delta);
 	delta = Math.round(delta);
 	console.log(old_rating, perf_rating, rating_deviation, delta);
